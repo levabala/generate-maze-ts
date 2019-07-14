@@ -1,11 +1,14 @@
 {
-  "name": "generate-maze",
+  "name": "generate-maze-ts",
   "version": "1.0.0",
   "description": "fork of bestguy/generate-maze",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/levabala/generate-maze",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/levabala/generate-maze.git"
+  },
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -50,14 +53,17 @@
   "engines": {
     "node": ">=8.9"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.14"
+  },
   "devDependencies": {
+    "@bitjson/npm-scripts-info": "^1.0.0",
+    "@types/lodash": "^4.14.136",
     "ava": "2.2.0",
     "codecov": "^3.5.0",
     "cz-conventional-changelog": "^2.1.0",
     "gh-pages": "^2.0.1",
     "npm-run-all": "^4.1.5",
-    "@bitjson/npm-scripts-info": "^1.0.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "standard-version": "^6.0.1",
@@ -89,5 +95,10 @@
     "exclude": [
       "**/*.spec.js"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/levabala/generate-maze/issues"
+  },
+  "homepage": "https://github.com/levabala/generate-maze#readme",
+  "author": "levabala"
 }
