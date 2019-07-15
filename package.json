@@ -12,6 +12,7 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
+    "publish:patch": "./commit.sh & yarn version --patch & yarn publish",
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
