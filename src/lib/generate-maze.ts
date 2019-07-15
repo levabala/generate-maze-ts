@@ -10,6 +10,8 @@ export interface Box {
   set?: number;
 }
 
+export type Maze = Row[];
+
 export type Row = Box[];
 
 function mergeSetWith(row: Row, oldSet: number, newSet: number): void {
