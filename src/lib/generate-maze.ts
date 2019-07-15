@@ -1,12 +1,20 @@
 import _ from 'lodash';
+import seed from 'seedrandom';
+
+export enum Direction {
+  top = 'top',
+  right = 'right',
+  bottom = 'bottom',
+  left = 'left'
+}
 
 export interface Box {
   x: number;
   y: number;
-  top: boolean;
-  left: boolean;
-  bottom: boolean;
-  right: boolean;
+  [Direction.top]: boolean;
+  [Direction.left]: boolean;
+  [Direction.bottom]: boolean;
+  [Direction.right]: boolean;
   set?: number;
 }
 
@@ -37,13 +45,17 @@ function populateMissingSets(row: Row): void {
   noSets.forEach((box, i) => ((box as Box).set = availableSets[i]));
 }
 
-function mergeRandomSetsIn(row: Row, probability = 0.5): void {
+function mergeRandomSetsIn(
+  row: Row,
+  probability = 0.5,
+  random: seed.prng
+): void {
   // Randomly merge some disjoint sets
   const allBoxesButLast = _.initial(row);
   allBoxesButLast.forEach((current, x) => {
     const next = row[x + 1];
     const differentSets = current.set !== next.set;
-    const shouldMerge = Math.random() <= probability;
+    const shouldMerge = random() <= probability;
     if (differentSets && shouldMerge) {
       mergeSetWith(row, next.set as number, current.set as number);
       current.right = false;
@@ -52,13 +64,13 @@ function mergeRandomSetsIn(row: Row, probability = 0.5): void {
   });
 }
 
-function addSetExits(row: Row, nextRow: Row): void {
+function addSetExits(row: Row, nextRow: Row, random: seed.prng): void {
   // Randomly add bottom exit for each set
   const setsInRow = _.chain(row)
     .groupBy('set')
     .values()
     .value();
-  const { ceil, random } = Math;
+  const { ceil } = Math;
   setsInRow.forEach(set => {
     const exits = _.sampleSize(set, ceil(random() * set.length));
     exits.forEach(exit => {
@@ -72,7 +84,12 @@ function addSetExits(row: Row, nextRow: Row): void {
   });
 }
 
-export function generate(width = 8, height = width, closed = true): Box[][] {
+export function generateMaze(
+  width = 8,
+  height = width,
+  closed = true,
+  randomSeed?: string
+): Box[][] {
   const maze: Row[] = [];
   const range = _.range(width);
 
@@ -91,17 +108,19 @@ export function generate(width = 8, height = width, closed = true): Box[][] {
     maze.push(row);
   }
 
+  const random = seed(1 === 1 ? 'randomSeed' : randomSeed);
+
   // All rows except last:
   _.initial(maze).forEach((row, y) => {
     // TODO initial temp?
     populateMissingSets(row);
-    mergeRandomSetsIn(row);
-    addSetExits(row, maze[y + 1]);
+    mergeRandomSetsIn(row, undefined, random);
+    addSetExits(row, maze[y + 1], random);
   });
 
   const lastRow = _.last(maze) as Box[];
   populateMissingSets(lastRow);
-  mergeRandomSetsIn(lastRow, 1);
+  mergeRandomSetsIn(lastRow, 1, random);
 
   return maze;
 }

@@ -12,7 +12,7 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "publish:patch": "./commit.sh && yarn version --patch && yarn publish",
+    "publish": "./commit.sh && yarn version --patch && git push --follow-tags origin master && yarn publish",
     "describe": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
@@ -55,11 +55,13 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "lodash": "^4.17.14"
+    "lodash": "^4.17.14",
+    "seedrandom": "^3.0.1"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
     "@types/lodash": "^4.14.136",
+    "@types/seedrandom": "^2.4.28",
     "ava": "2.2.0",
     "codecov": "^3.5.0",
     "cz-conventional-changelog": "^2.1.0",
