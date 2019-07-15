@@ -1,6 +1,6 @@
 {
   "name": "generate-maze-ts",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "fork of bestguy/generate-maze",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
