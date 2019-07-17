@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/levabala/generate-maze/compare/v1.0.12...v1.1.1) (2019-07-17)
+
+
+
 ### [1.0.12](https://github.com/levabala/generate-maze/compare/v1.0.10...v1.0.12) (2019-07-15)
 
 
